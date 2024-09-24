@@ -29,7 +29,7 @@ const createWindow = () => {
     }).then(result => {
         if(!result.canceled)
     
-          result = openCSVStreamPapa(result.filePaths[0]).then(event)
+          result = writeJsonFromCSV(result.filePaths[0]).then(event)
       }).catch(err => {
         console.log(err)
       })
@@ -62,28 +62,9 @@ function formatJsonRow(row){
   return map;
 
 }
-function getHeader(filePath){
-  return new Promise((resolve, reject) => {
 
-    let readStream = fs.createReadStream(filePath);
-    readStream
-      .pipe(csv())
-      .on("data", (data) => {
-        results.push(data);
-      })
-      .on("error", (error) => reject(error))
-      .on('headers', (headers) => {
-        results.push(headers);
-        readStream.destroy();
-      }).on("end", () => {
-          resolve(results);
-      });
 
-  });
-
-}
-
- async function openCSVStreamPapa(filePath){
+ async function writeJsonFromCSV(filePath){
 
   const writeStream = fs.createWriteStream('test-data3.json')
   var date_time = new Date();
@@ -115,31 +96,6 @@ function getHeader(filePath){
   });
 });
 }
-function openFile() {
-  return new Promise((resolve, reject) => {
-      fs.readFile("logs.txt", "utf-8", (error, data) => {
-          if (error) {
-              console.log('reject: ' + error); // Testing
-              reject(error);
-          } else {
-              console.log('resolve: ' + data); // Testing
-              resolve(data)
-          }
-      });
-  });
-}
-
-ipcMain.handle('channel-load-file', async (event, message) => {
-  return await openFile()
-      .then((data) => {
-          console.log('handle: ' + data); // Testing
-          return data;
-      })
-      .catch((error) => {
-          console.log('handle error: ' + error); // Testing
-          return 'Error Loading Log File';
-      })
-});
 
 app.whenReady().then(() => {
   ipcMain.handle('dialog', (event, method, params) => {       
