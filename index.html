@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>Hello from Electron renderer!</title>
+  </head>
+  <body>
+    <h3>File Upload in Electron</h3>
+    <p>
+      <label>Select Format</label>
+      <select name="format" id="format">
+          <option name="standard" selected>Standard</option>
+          <option name="standard1">Standard 1</option>
+      </select>
+    </p>
+    <input type="button" id="button" value="Load File">
+  </body>
+  <script src="renderer.js"></script>
+</html>
