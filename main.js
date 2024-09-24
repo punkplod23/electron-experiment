@@ -29,10 +29,7 @@ const createWindow = () => {
     }).then(result => {
         if(!result.canceled)
     
-            output = openCSVStreamPapa(result.filePaths[0]);
-            return output
-  
-          //console.log()
+          result = openCSVStreamPapa(result.filePaths[0]).then(event)
       }).catch(err => {
         console.log(err)
       })
@@ -86,7 +83,7 @@ function getHeader(filePath){
 
 }
 
- function openCSVStreamPapa(filePath){
+ async function openCSVStreamPapa(filePath){
 
   const writeStream = fs.createWriteStream('test-data3.json')
   var date_time = new Date();

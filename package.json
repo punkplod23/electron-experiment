@@ -1,0 +1,22 @@
+{
+  "name": "electron",
+  "version": "1.0.0",
+  "description": "Electron app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '/*.js'"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^32.1.2",
+    "eslint": "^9.11.1"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "jsonschema": "^1.4.1",
+    "papaparse": "^5.4.1"
+  }
+}
