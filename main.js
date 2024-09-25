@@ -52,26 +52,28 @@ function fsReadFileSynchToArray (filePath) {
   return data;
 }
 
-function formatJsonRow(row){
-  map = fsReadFileSynchToArray("schema/map.json");
-  emptyObject = []
-  for (const [key, value] of Object.entries(map)){
-    if(typeof map[key] == "undefined" || typeof row[value]  == "undefined"){
+function formatJsonRow(row,MapObject){
+
+  let emptyObject = []
+  let mapClone = MapObject;
+
+  for (const [key, value] of Object.entries(mapClone)){
+    if(typeof row[value]  == "undefined"){
         return emptyObject;
     }
-    map[key] = row[value];
+    mapClone[key] = row[value];
   } 
-  return map;
+  return mapClone;
 
 }
 
 
  async function writeJsonFromCSV(filePath){
-  console.log(path.join(__dirname,`test-data3.json`))
   const writeStream = fs.createWriteStream(path.join(__dirname,`test-data3.json`))
+  writeStream.write('[');
   var date_time = new Date();
   console.log("start:"+date_time);
-  var count = 0; // cache the running count
+
   return new Promise((resolve, reject) => {
     let data = {}
     const file = fs.createReadStream(filePath)
@@ -79,20 +81,21 @@ function formatJsonRow(row){
     papa.parse(file, {
       header: true,
       dynamicTyping: true,
-      worker: true, // Don't bog down the main thread if its a big file
+      skipEmptyLines:true,
+      worker: false, // Don't bog down the main thread if its a big file
       step: function(result) {
-          data = formatJsonRow(result.data)
+          jsonMapper = { Firstname: '0', Surname: '0.3685242459168049' }
+          data = formatJsonRow(result.data,jsonMapper)
           if(Object.keys(data).length > 0){
-            writeStream.write((i > 1 ? ',' : '[')+JSON.stringify(data))
+            writeStream.write((i > 1 ? ',' : '')+JSON.stringify(data))
           }
           i++;
       },
       complete: function(results) {
         var date_time = new Date();
         console.log("End:"+date_time);
-        //console.log(results.data);
+        console.log("Rows:"+i);
         writeStream.write(']')
-        writeStream.close;
         resolve(userpath+'/test-data3.json')
       }
   });
