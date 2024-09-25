@@ -1,6 +1,7 @@
 node_modules
 *.csv
 *.json
+dist
 !package.json
 !package-lock.json
 !schema/*.json

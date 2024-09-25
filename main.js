@@ -4,9 +4,11 @@ const fs = require('node:fs')
 const csv = require('csv-parser')
 const papa = require('papaparse');
 const Validator = require('jsonschema').Validator;
-
 //Increase file size
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
+
+
+
 
 const https = require('node:https')
 const createWindow = () => {
@@ -65,8 +67,8 @@ function formatJsonRow(row){
 
 
  async function writeJsonFromCSV(filePath){
-
-  const writeStream = fs.createWriteStream('test-data3.json')
+  console.log(path.join(__dirname,`test-data3.json`))
+  const writeStream = fs.createWriteStream(path.join(__dirname,`test-data3.json`))
   var date_time = new Date();
   console.log("start:"+date_time);
   var count = 0; // cache the running count
@@ -91,7 +93,7 @@ function formatJsonRow(row){
         //console.log(results.data);
         writeStream.write(']')
         writeStream.close;
-        resolve("test-data3.json")
+        resolve(userpath+'/test-data3.json')
       }
   });
 });

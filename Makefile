@@ -19,11 +19,7 @@ test:
 	exit()
 
 build:
-	exit()
-	gn gen out/Release-x86 --args="import(\"//electron/build/args/release.gn\") target_cpu=\"x86\""
-
-build-add-paths:
-
-
+	npm run app:dist
+	
 run:
 	npm run start

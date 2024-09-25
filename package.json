@@ -1,18 +1,24 @@
 {
-  "name": "electron",
+  "name": "ms-csv-formatter",
   "version": "1.0.0",
-  "description": "Electron app",
+  "description": "MS CSV Formatter",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint '/*.js'"
+    "lint": "eslint '/*.js'",
+    "app:dir": "electron-builder --dir",
+    "app:dist": "electron-builder"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^32.1.2",
-    "eslint": "^9.11.1"
+    "eslint": "^9.11.1",
+    "electron-builder": "^25.0.5"
+  },
+  "build": {
+    "files":["!builds/*","!patches/*","!packages/*","!*.csv","!.gitignore","!*.py"]  
   },
   "dependencies": {
     "csv-parser": "^3.0.0",
